@@ -12,11 +12,15 @@ import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { assets } from "../../assets/assets";
+import TopDrawer from "../TopDrawer/TopDrawer";
+import CloseIcon from "@mui/icons-material/Close";
+import { useState } from "react";
+import { Button } from "@mui/material";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -57,10 +61,20 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
-
+const links = [
+  { label: "Cart", id: "cart", icon: <ShoppingCartIcon /> },
+  { label: "Notification", id: "notification", icon: <NotificationsIcon /> },
+  { label: "Profile", id: "profile", icon: <AccountCircle /> },
+];
+const pages = [
+  { label: "Home", id: "home" },
+  { label: "Menu", id: "menu" },
+  { label: "Contact Us", id: "contact" },
+];
 function Navbar() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
+  const [isOpenDrawer, setIsOpenDrawer] = useState(false);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -81,7 +95,18 @@ function Navbar() {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+  function handleOpenNavMenu() {
+    setIsOpenDrawer(true);
+  }
 
+  function handleCloseNavMenu() {
+    setIsOpenDrawer(false);
+  }
+
+  function handleCloseButton() {
+    setIsOpenDrawer(false);
+    console.log("clicked");
+  }
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -104,71 +129,52 @@ function Navbar() {
     </Menu>
   );
 
-  const mobileMenuId = "primary-search-account-menu-mobile";
-  const renderMobileMenu = (
-    <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      id={mobileMenuId}
-      keepMounted
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
-    >
-      <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
-            <ShoppingCartIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 17 new notifications"
-          color="inherit"
-        >
-          <Badge badgeContent={17} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
-    </Menu>
-  );
-
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{ backgroundColor: "#ffffff" }}>
+      <AppBar
+        position="fixed"
+        sx={{
+          backgroundColor: "#ffffff",
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+        }}
+      >
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="#939598"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
+          <Box
+            sx={{
+              flexGrow: 1,
+              minWidth: 50,
+              alignItems: "center",
+              justifyContent: "center",
+              display: { xs: "flex", md: "none" },
+            }}
           >
-            <MenuIcon />
-          </IconButton>
+            {!isOpenDrawer && (
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleOpenNavMenu}
+                color="#999999"
+              >
+                <MenuIcon />
+              </IconButton>
+            )}
+            {isOpenDrawer && (
+              <IconButton
+                sx={{ color: "#999999", marginBottom: 1 }}
+                onClick={handleCloseButton}
+              >
+                <CloseIcon />
+              </IconButton>
+            )}
+            <TopDrawer
+              isOpenDrawer={isOpenDrawer}
+              links={links}
+              handleClose={handleCloseNavMenu}
+              pages={pages}
+            />
+          </Box>
           <IconButton
             size="large"
             edge="start"
@@ -185,22 +191,21 @@ function Navbar() {
             />
           </IconButton>
           <Search
+            sx={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <SearchIcon
               sx={{
-                display: "flex",
-                alignItems: "center",
-              }}>
-             <SearchIcon
-                sx={{
-                  color: "#999999",
-                }}
-              />
+                color: "#999999",
+              }}
+            />
             <SearchIconWrapper
               sx={{
                 color: "#000000",
               }}
-            >
-             
-            </SearchIconWrapper>
+            ></SearchIconWrapper>
             <StyledInputBase
               sx={{
                 backgroundColor: "#F5F5F5",
@@ -213,6 +218,24 @@ function Navbar() {
               inputProps={{ "aria-label": "search" }}
             />
           </Search>
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+            {pages.map((page) => (
+              <Button
+                key={page.id}
+                onClick={handleCloseNavMenu}
+                sx={{
+                  my: 2,
+                  color: "#999999",
+                  display: "block",
+                  fontFamily: "Montserrat Alternates",
+                  textTransform: "none",
+                  fontSize: { xs: ".7rem", lg: "1rem" },
+                }}
+              >
+                {page.label}
+              </Button>
+            ))}
+          </Box>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <IconButton
@@ -245,22 +268,8 @@ function Navbar() {
               <AccountCircle />
             </IconButton>
           </Box>
-          <Box sx={{ display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="#999999"
-            >
-              <MoreIcon />
-            </IconButton>
-          </Box>
         </Toolbar>
       </AppBar>
-      {renderMobileMenu}
-      {renderMenu}
     </Box>
   );
 }
