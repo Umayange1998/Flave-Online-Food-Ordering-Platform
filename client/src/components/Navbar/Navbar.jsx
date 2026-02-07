@@ -180,7 +180,8 @@ function Navbar() {
             edge="start"
             color="inherit"
             aria-label="open drawer"
-            sx={{ mr: 2 }}
+            sx={{ mr:{xs: 2, md: 10},
+          ml:{xs: 0, md: 6} }}
           >
             <img
               src={assets.Logo}

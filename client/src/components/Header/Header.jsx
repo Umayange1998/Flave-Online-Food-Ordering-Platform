@@ -23,8 +23,13 @@ function Header() {
   return (
     <Card
       sx={{
-        // maxWidth: 345,
-        height: "34vw",
+        height: {
+          xs: "70vh",
+          sm: "50vh",
+          md: "34vw",
+        },
+        minHeight: "420px",
+
         width: "90%",
         position: "relative",
         color: "#fff",
@@ -70,13 +75,24 @@ function Header() {
       >
         <CardContent
           sx={{
-            position: "absolute",
             display: "flex",
             flexDirection: "column",
             alignItems: "flex-start",
-            maxWidth: "50%",
-            bottom: "10%",
-            left: "6vw",
+            position: "absolute",
+            maxWidth: {
+              xs: "90%",
+              sm: "70%",
+              md: "50%",
+            },
+            left: {
+              xs: "5%",
+              md: "6vw",
+            },
+            bottom: {
+              xs: "8%",
+              md: "10%",
+            },
+
             animation: `${fadeIn} 3s ease`,
           }}
         >
@@ -88,6 +104,11 @@ function Header() {
               fontFamily: "poppins",
               textAlign: "left",
               mb: "0",
+              fontSize: {
+                xs: "2rem",
+                sm: "2.5rem",
+                md: "3.75rem",
+              },
             }}
           >
             Delicious Food Awaits
@@ -95,7 +116,11 @@ function Header() {
           <Typography
             variant="body2"
             sx={{
-              fontSize: "1.2rem",
+             fontSize: {
+                xs: "1rem",
+                sm: "1.2rem",
+                md: "1.5rem",
+              },
               fontFamily: "roboto",
               textAlign: "left",
               display: "flex",
@@ -107,15 +132,24 @@ function Header() {
           </Typography>
           <Button
             variant="contained"
-            size="large"
             sx={{
+              fontSize: {
+                xs: "0.85rem",
+                sm: "0.95rem",
+                md: "1rem",
+              },
+              py: {
+                xs: "0.6rem",
+                md: "0.8rem",
+              },
+              px: {
+                xs: "1.5rem",
+                md: "2.5rem",
+              },
+              borderRadius: "30px",
               backgroundColor: "#fff",
               color: "#000",
               "&:hover": { backgroundColor: "#999999" },
-              borderRadius: "30px",
-              fontFamily: "roboto",
-              py: "0.8rem",
-              px: "2.5rem",
             }}
           >
             Menu
