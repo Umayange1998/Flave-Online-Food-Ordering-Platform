@@ -5,6 +5,11 @@ import menu_3 from "./menu_3.jpg";
 import menu_4 from "./menu_4.jpg";
 import menu_5 from "./menu_5.jpg";
 import menu_6 from "./menu_6.jpg";
+import menu_7 from "./menu_7.jpg";
+import menu_8 from "./menu_8.jpg";
+import menu_9 from "./menu_9.jpg";
+import menu_10 from "./menu_10.jpg";
+import menu_11 from "./menu_11.jpg";
 
 export const assets = {
   Logo,
@@ -35,25 +40,25 @@ export const menu_list= [
     menu_name:"Vegetables",
     menu_image: menu_6
   },
-  // {
-  //   menu_name:"Fried Rice",
-  //   menu_image: menu_7
-  // },
-  // {
-  //   menu_name:"Fried Noodles",
-  //   menu_image: menu_8
-  // },
-  // {
-  //   menu_name:"Kottu",
-  //   menu_image: menu_9
-  // },
-  // {
-  //   menu_name:"Pasta and Spaghetti",
-  //   menu_image: menu_10
-  // },
-  // {
-  //   menu_name:"Soft Drinks",
-  //   menu_image: menu_11
-  // },
+  {
+    menu_name:"Fried Rice",
+    menu_image: menu_7
+  },
+  {
+    menu_name:"Fried Noodles",
+    menu_image: menu_8
+  },
+  {
+    menu_name:"Kottu",
+    menu_image: menu_9
+  },
+  {
+    menu_name:"Pasta and Spaghetti",
+    menu_image: menu_10
+  },
+  {
+    menu_name:"Soft Drinks",
+    menu_image: menu_11
+  },
   
 ]

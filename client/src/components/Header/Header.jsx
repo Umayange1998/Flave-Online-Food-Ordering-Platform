@@ -24,16 +24,18 @@ function Header() {
     <Card
       sx={{
         height: {
-          xs: "70vh",
+          xs: "50vh",
           sm: "50vh",
-          md: "34vw",
+          md: "36vw",
         },
         minHeight: "420px",
 
         width: "90%",
         position: "relative",
         color: "#fff",
-        margin: "100px auto",
+        mx: "auto",
+        mt:'130px',
+        mb:'100px',
         padding: 0,
         borderRadius: "20px",
       }}
@@ -152,7 +154,7 @@ function Header() {
               "&:hover": { backgroundColor: "#999999" },
             }}
           >
-            Menu
+            View Menu
           </Button>
         </CardContent>
       </Box>
