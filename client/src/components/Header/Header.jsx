@@ -24,18 +24,18 @@ function Header() {
     <Card
       sx={{
         height: {
-          xs: "50vh",
+          xs: "28vh",
           sm: "50vh",
           md: "36vw",
         },
-        minHeight: "420px",
+        // minHeight: "420px",
 
         width: "90%",
         position: "relative",
         color: "#fff",
         mx: "auto",
-        mt:'130px',
-        mb:'100px',
+        mt: {xs:"80px" , sm: "100px", md: "120px"},
+        mb: {xs:"40px" , sm: "50px", md: "70px"},
         padding: 0,
         borderRadius: "20px",
       }}
@@ -54,7 +54,6 @@ function Header() {
         }}
       />
 
-      {/* Optional dark overlay for readability */}
       <Box
         sx={{
           position: "absolute",
@@ -81,19 +80,26 @@ function Header() {
             flexDirection: "column",
             alignItems: "flex-start",
             position: "absolute",
+            // justifyContent: "space-between",
             maxWidth: {
               xs: "90%",
               sm: "70%",
-              md: "50%",
+              md: "70%",
             },
             left: {
               xs: "5%",
               md: "6vw",
             },
             bottom: {
-              xs: "8%",
+              xs: "0%",
+              sm: "8%",
               md: "10%",
             },
+            //  top: {
+            //   xs: "8%",
+            //   sm: "30%",
+            //   md: "30%",
+            // },
 
             animation: `${fadeIn} 3s ease`,
           }}
@@ -107,9 +113,10 @@ function Header() {
               textAlign: "left",
               mb: "0",
               fontSize: {
-                xs: "2rem",
-                sm: "2.5rem",
-                md: "3.75rem",
+                xs: "1.5rem",
+                sm: "2rem",
+                md: "2.75rem",
+                lg: "3.75rem",
               },
             }}
           >
@@ -118,10 +125,11 @@ function Header() {
           <Typography
             variant="body2"
             sx={{
-             fontSize: {
-                xs: "1rem",
-                sm: "1.2rem",
-                md: "1.5rem",
+              fontSize: {
+                xs: "0.8rem",
+                sm: "1rem",
+                md: "1.2rem",
+                lg: "1.5rem",
               },
               fontFamily: "roboto",
               textAlign: "left",
@@ -141,11 +149,11 @@ function Header() {
                 md: "1rem",
               },
               py: {
-                xs: "0.6rem",
+                xs: "0.2rem",
                 md: "0.8rem",
               },
               px: {
-                xs: "1.5rem",
+                xs: "1rem",
                 md: "2.5rem",
               },
               borderRadius: "30px",

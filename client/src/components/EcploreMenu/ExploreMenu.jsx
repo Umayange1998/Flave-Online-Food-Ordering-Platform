@@ -42,7 +42,7 @@ function ExploreMenu({ category, setCategory }) {
     }
   }, []);
   return (
-    <Grid container spacing={2} sx={{ marginTop: "50px", mb: "50px" }}>
+    <Grid container spacing={2} sx={{ marginTop: "20px", mb: "20px" }}>
       <Grid
         size={12}
         sx={{ display: "flex", flexDirection: "column", mx: 2, gap: 2 }}
@@ -53,7 +53,7 @@ function ExploreMenu({ category, setCategory }) {
             ml: "5%",
             textAlign: "left",
             fontWeight: "bold",
-            fontSize: { xs: "1.5rem", sm: "2.5rem", md: "3rem" },
+            fontSize: { xs: "1.5rem", sm: "2rem", md: "2.5rem" },
           }}
         >
           Explore our menu
@@ -62,7 +62,7 @@ function ExploreMenu({ category, setCategory }) {
           sx={{
             ml: "5%",
             textAlign: "left",
-            fontSize: { xs: "1rem", sm: "1.2rem", md: "1.5rem" },
+            fontSize: { xs: "0.8rem", sm: "1rem", md: "1.2rem" },
           }}
         >
           Discover a variety of delicious dishes crafted to satisfy every
@@ -140,10 +140,12 @@ function ExploreMenu({ category, setCategory }) {
                 sx={{
                   display: "flex",
                   flexDirection: "column",
-                  my: 2,
-                  mx: 2,
-                  gap: 1,
-                  minWidth: 150,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  my: {xs: 0, sm: 1, md: 2},
+                  mx: {xs: 0.5, sm: 1, md: 2},
+                  // gap: 1,
+                  minWidth: {xs:80, sm: 100, md: 120},
                   cursor: "pointer",
                 }}
                 onClick={() =>
@@ -155,8 +157,8 @@ function ExploreMenu({ category, setCategory }) {
                 <Card
                   sx={{
                     borderRadius: "50%",
-                    width: 150,
-                    height: 150,
+                    width: { xs: 60, sm: 80, md: 100 },
+                    height: { xs: 60, sm: 80, md: 100 },
                     gap: 10,
                     mb: 2,
                     display: "flex",
@@ -199,7 +201,7 @@ function ExploreMenu({ category, setCategory }) {
       <Grid size={12}>
         <Divider
           sx={{
-            mt: 3,
+            mt: 0,
             height: 2,
             backgroundColor: "#999999",
             border: "none",
