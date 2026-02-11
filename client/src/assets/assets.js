@@ -62,13 +62,15 @@ import Coca_Cola from "./Coca_Cola.jpg";
 import Sprite from "./Sprite.jpg";
 import Mineral_Water from "./Mineral_Water.jpg";
 import Star_rating from "./Star_rating.png";
+import G_logo from "./G_logo.png";
 
 
 
 
 export const assets = {
   Logo,
-  Star_rating
+  Star_rating,
+  G_logo
 };
 
 export const menu_list= [

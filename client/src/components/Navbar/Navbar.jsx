@@ -13,14 +13,13 @@ import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import MoreIcon from "@mui/icons-material/MoreVert";
 import { assets } from "../../assets/assets";
 import TopDrawer from "../TopDrawer/TopDrawer";
 import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
 import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -71,7 +70,8 @@ const pages = [
   { label: "Menu", id: "menu" },
   { label: "Contact Us", id: "contact" },
 ];
-function Navbar() {
+function Navbar({setShowSignin}) {
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
@@ -180,8 +180,11 @@ function Navbar() {
             edge="start"
             color="inherit"
             aria-label="open drawer"
-            sx={{ mr:{xs: 2, md: 10},
-          ml:{xs: 0, md: 6} }}
+            sx={{ mr: { xs: 2, md: 10 }, ml: { xs: 0, md: 6 } }}
+            onClick={() => {
+              window.scrollTo({ top: 0, behavior: "smooth" });
+              navigate("/");
+            }}
           >
             <img
               src={assets.Logo}
@@ -244,7 +247,9 @@ function Navbar() {
               aria-label="show 4 new mails"
               color="#999999"
             >
-              <Badge badgeContent={4} color="error">
+              <Badge badgeContent={4} color="error"
+              onClick={()=>navigate("/cart")}
+              >
                 <ShoppingCartIcon />
               </Badge>
             </IconButton>
@@ -257,7 +262,7 @@ function Navbar() {
                 <NotificationsIcon />
               </Badge>
             </IconButton>
-            <IconButton
+            {/* <IconButton
               size="large"
               edge="end"
               aria-label="account of current user"
@@ -267,7 +272,24 @@ function Navbar() {
               color="#999999"
             >
               <AccountCircle />
-            </IconButton>
+            </IconButton> */}
+            <Button
+              variant="outlined"
+              sx={{
+                p: "0.1rem 2rem",
+                color: "#999999",
+                borderColor: "#999999",
+                "&:hover": {
+                  borderColor: "#999999",
+                 
+                },
+                 borderRadius:'30px',
+                  mx: 2,
+              }}
+              onClick={() => setShowSignin(true)}
+            >
+              Sign In
+            </Button>
           </Box>
         </Toolbar>
       </AppBar>
