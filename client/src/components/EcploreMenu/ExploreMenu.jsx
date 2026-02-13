@@ -42,7 +42,12 @@ function ExploreMenu({ category, setCategory }) {
     }
   }, []);
   return (
-    <Grid container spacing={2} sx={{ marginTop: "20px", mb: "20px" }}>
+    <Grid
+      container
+      id="menu"
+      spacing={2}
+      sx={{ marginTop: "20px", mb: "20px", scrollMarginTop: "100px"  }}
+    >
       <Grid
         size={12}
         sx={{ display: "flex", flexDirection: "column", mx: 2, gap: 2 }}
@@ -142,10 +147,10 @@ function ExploreMenu({ category, setCategory }) {
                   flexDirection: "column",
                   alignItems: "center",
                   justifyContent: "center",
-                  my: {xs: 0, sm: 1, md: 2},
-                  mx: {xs: 0.5, sm: 1, md: 2},
+                  my: { xs: 0, sm: 1, md: 2 },
+                  mx: { xs: 0.5, sm: 1, md: 2 },
                   // gap: 1,
-                  minWidth: {xs:80, sm: 100, md: 120},
+                  minWidth: { xs: 80, sm: 100, md: 120 },
                   cursor: "pointer",
                 }}
                 onClick={() =>

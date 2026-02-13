@@ -8,6 +8,8 @@ import Footer from './components/Footer/Footer';
 import { Toolbar } from '@mui/material';
 import { useState } from 'react';
 import SigninForm from './SigninForm/SigninForm.jsx';
+import ScrollToTop from "./ScrollToTop.jsx";
+
 
 function App() {
 
@@ -18,6 +20,7 @@ function App() {
     <div className="App">
      <Navbar setShowSignin={setShowSignin} />
      <Toolbar />
+     <ScrollToTop />
      <Routes>
       <Route path='/' element={<Home/>}/>
       <Route path='/cart' element={<Cart/>}/>

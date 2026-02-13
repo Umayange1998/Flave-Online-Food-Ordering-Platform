@@ -19,7 +19,7 @@ import TopDrawer from "../TopDrawer/TopDrawer";
 import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
 import { Button } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -67,11 +67,12 @@ const links = [
 ];
 const pages = [
   { label: "Home", id: "home" },
-  { label: "Menu", id: "menu" },
+  { label: "Menu", id: "menu", type: "scroll" },
   { label: "Contact Us", id: "contact" },
 ];
-function Navbar({setShowSignin}) {
+function Navbar({ setShowSignin }) {
   const navigate = useNavigate();
+  const location = useLocation();
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
@@ -226,7 +227,33 @@ function Navbar({setShowSignin}) {
             {pages.map((page) => (
               <Button
                 key={page.id}
-                onClick={handleCloseNavMenu}
+                onClick={() => {
+                  handleCloseNavMenu();
+
+                  // HOME BUTTON
+                  if (page.id === "home") {
+                    if (location.pathname !== "/") {
+                      navigate("/");
+                    }
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  }
+
+                  // SCROLL SECTIONS (Menu)
+                  if (page.type === "scroll") {
+                    if (location.pathname !== "/") {
+                      navigate("/");
+                      setTimeout(() => {
+                        document
+                          .getElementById(page.id)
+                          ?.scrollIntoView({ behavior: "smooth" });
+                      }, 300);
+                    } else {
+                      document
+                        .getElementById(page.id)
+                        ?.scrollIntoView({ behavior: "smooth" });
+                    }
+                  }
+                }}
                 sx={{
                   my: 2,
                   color: "#999999",
@@ -246,9 +273,12 @@ function Navbar({setShowSignin}) {
               size="large"
               aria-label="show 4 new mails"
               color="#999999"
+              onClick={() => navigate("/cart")}
             >
-              <Badge badgeContent={4} color="error"
-              onClick={()=>navigate("/cart")}
+              <Badge
+                badgeContent={4}
+                color="error"
+                
               >
                 <ShoppingCartIcon />
               </Badge>
@@ -281,10 +311,9 @@ function Navbar({setShowSignin}) {
                 borderColor: "#999999",
                 "&:hover": {
                   borderColor: "#999999",
-                 
                 },
-                 borderRadius:'30px',
-                  mx: 2,
+                borderRadius: "30px",
+                mx: 2,
               }}
               onClick={() => setShowSignin(true)}
             >
