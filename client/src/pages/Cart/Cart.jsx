@@ -24,6 +24,9 @@ function Cart() {
     const navigate = useNavigate();
 
     const deliveryFee = 2.99;
+    const subtotal = getTotalCartAmount();
+const total = subtotal + deliveryFee;
+
   return (
     <Grid
       container
@@ -142,7 +145,7 @@ function Cart() {
                         align="left"
                         sx={{ fontSize: { xs: "0.6rem", sm: "1rem" } }}
                       >
-                        $. {item.price * cartItems[item._id]}
+                        $. {(item.price * cartItems[item._id]).toFixed(2)}
                       </TableCell>
                     </TableRow>
                   );
@@ -170,15 +173,15 @@ function Cart() {
         </Box>
         <Box display={"flex"} justifyContent={"space-between"} sx={{ p: 2 }}>
           <Typography>Subtotal:</Typography>
-          <Typography>$ {getTotalCartAmount()}</Typography>
+          <Typography>$ {subtotal.toFixed(2)}</Typography>
         </Box>
         <Box display={"flex"} justifyContent={"space-between"} sx={{ p: 2 }}>
           <Typography>Delivery fee:</Typography>
-          <Typography>$ {deliveryFee}</Typography>
+          <Typography>$ {subtotal===0?"0.00":deliveryFee.toFixed(2)}</Typography>
         </Box>
         <Box display={"flex"} justifyContent={"space-between"} sx={{ p: 2 }}>
           <Typography>Total:</Typography>
-          <Typography>$ {getTotalCartAmount() + deliveryFee}</Typography>
+          <Typography>$ {subtotal===0?"0.00":total.toFixed(2)}</Typography>
         </Box>
         <Box display={"flex"} justifyContent={{ xs: "center", sm: "flex-start" }} sx={{ p: 2 }}>
           <Button variant="contained"

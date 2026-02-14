@@ -20,6 +20,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
 import { Button } from "@mui/material";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useContext } from "react";
+import { StoreContext } from "../../context/StoreContext";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -76,7 +78,7 @@ function Navbar({ setShowSignin }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
-
+const {cartItems} = useContext(StoreContext);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -276,7 +278,7 @@ function Navbar({ setShowSignin }) {
               onClick={() => navigate("/cart")}
             >
               <Badge
-                badgeContent={4}
+                badgeContent={Object.values(cartItems).reduce((a, b) => a + b, 0)}
                 color="error"
                 
               >
