@@ -1,4 +1,6 @@
 import React, { useRef, useState } from "react";
+import axios from "axios";
+
 import {
   Box,
   Paper,
@@ -14,8 +16,10 @@ import {
 } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
+import { toast } from "react-toastify";
 
 function Add() {
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
   const fileInputRef = useRef(null);
 
   const [name, setName] = useState("");
@@ -30,7 +34,9 @@ function Add() {
 
   const FoodCategory = ["Pizza", "Burger", "Dessert", "Drinks"];
 
-  const handleAddFood = () => {
+  const handleAddFood = async () => {
+    console.log("BASE_URL:", BASE_URL);
+
     const newErrors = {};
 
     if (!name.trim()) newErrors.name = "Product name is required";
@@ -43,7 +49,38 @@ function Add() {
 
     if (Object.keys(newErrors).length > 0) return;
 
-    console.log({ name, description, price, category, image });
+    try {
+      const formData = new FormData();
+
+      formData.append("name", name);
+      formData.append("description", description);
+      formData.append("price", price);
+      formData.append("category", category);
+      formData.append("image", image);
+
+      const response = await axios.post(`${BASE_URL}/food`, formData);
+
+      console.log("Food added:", response.data);
+
+      setName("");
+      setDescription("");
+      setPrice("");
+      setCategory("");
+      setImage(null);
+      setImagePreview(null);
+      setErrors({});
+      toast.success("Food added successfully!");
+    } catch (error) {
+      console.error(
+        "Error adding food:",
+        error.response?.data || error.message,
+      );
+      toast.error(
+        error.response?.data ||
+          error.message ||
+          "Failed to add food. Please try again.",
+      );
+    }
   };
 
   const handleImageUpload = (e) => {
@@ -74,26 +111,21 @@ function Add() {
       <Box display="flex" flexDirection="column" gap={3}>
         {/* Image Upload */}
         <Box>
-          <Typography variant="subtitle2" mb={1}>
-            Upload Image *
-          </Typography>
-
           <Box
             onClick={() => fileInputRef.current?.click()}
             sx={{
-              width: 140,
+              fullWidth: true,
               height: 140,
-              border: errors.image
-                ? "2px dashed red"
-                : "2px dashed #e0e0e0",
+              border: errors.image ? "2px dashed red" : "2px dashed #e0e0e0",
               borderRadius: 2,
               display: "flex",
               alignItems: "center",
+              flexDirection: "column",
               justifyContent: "center",
               cursor: "pointer",
               position: "relative",
               overflow: "hidden",
-              "&:hover": { backgroundColor: "#fafafa" },
+              "&:hover": { backgroundColor: "#fafafa", borderColor: "#ff7a00" },
             }}
           >
             {imagePreview ? (
@@ -121,7 +153,7 @@ function Add() {
                 </Box>
               </>
             ) : (
-              <CloudUploadIcon sx={{ fontSize: 40, color: "#bdbdbd" }} />
+              <CloudUploadIcon sx={{ fontSize: 40, color: "#ff7a00" }} />
             )}
 
             {loading && (
@@ -138,6 +170,9 @@ function Add() {
                 <CircularProgress size={30} />
               </Box>
             )}
+            <Typography variant="subtitle2" mb={1}>
+              Upload Image *
+            </Typography>
           </Box>
 
           {errors.image && (
@@ -164,6 +199,21 @@ function Add() {
           required
           error={!!errors.name}
           helperText={errors.name}
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              "&:hover .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#ff7a00",
+              },
+              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#ff7a00",
+              },
+            },
+            "& .MuiInputLabel-root": {
+              "&.Mui-focused": {
+                color: "#ff7a00",
+              },
+            },
+          }}
         />
 
         {/* Description */}
@@ -177,11 +227,45 @@ function Add() {
           required
           error={!!errors.description}
           helperText={errors.description}
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              "&:hover .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#ff7a00",
+              },
+              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#ff7a00",
+              },
+            },
+            "& .MuiInputLabel-root": {
+              "&.Mui-focused": {
+                color: "#ff7a00",
+              },
+            },
+          }}
         />
 
         {/* Category + Price */}
         <Box display="grid" gridTemplateColumns="1fr 1fr" gap={2}>
-          <FormControl fullWidth required error={!!errors.category}>
+          <FormControl
+            fullWidth
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                "&:hover .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#ff7a00",
+                },
+                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#ff7a00",
+                },
+              },
+              "& .MuiInputLabel-root": {
+                "&.Mui-focused": {
+                  color: "#ff7a00",
+                },
+              },
+            }}
+            required
+            error={!!errors.category}
+          >
             <InputLabel>Product Category</InputLabel>
             <Select
               value={category}
@@ -190,10 +274,18 @@ function Add() {
                 setCategory(e.target.value);
                 setErrors((prev) => ({ ...prev, category: null }));
               }}
+              sx={{
+                "&:hover .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#ff7a00",
+                },
+                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#ff7a00",
+                },
+              }}
             >
-              {FoodCategory.map((cat) => (
-                <MenuItem key={cat} value={cat}>
-                  {cat}
+              {FoodCategory.map((item) => (
+                <MenuItem key={item} value={item}>
+                  {item}
                 </MenuItem>
               ))}
             </Select>
@@ -208,6 +300,21 @@ function Add() {
             required
             error={!!errors.price}
             helperText={errors.price}
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                "&:hover .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#ff7a00",
+                },
+                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#ff7a00",
+                },
+              },
+              "& .MuiInputLabel-root": {
+                "&.Mui-focused": {
+                  color: "#ff7a00",
+                },
+              },
+            }}
           />
         </Box>
 
@@ -215,7 +322,7 @@ function Add() {
           variant="contained"
           onClick={handleAddFood}
           sx={{
-            width: 150,
+            width: "100%",
             bgcolor: "#ff7a00",
             "&:hover": { bgcolor: "#c96304" },
           }}

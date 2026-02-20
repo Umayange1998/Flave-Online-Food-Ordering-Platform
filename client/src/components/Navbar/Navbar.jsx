@@ -22,6 +22,8 @@ import { Button } from "@mui/material";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useContext } from "react";
 import { StoreContext } from "../../context/StoreContext";
+import DeliveryDiningIcon from "@mui/icons-material/DeliveryDining";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -78,7 +80,7 @@ function Navbar({ setShowSignin }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
-const {cartItems} = useContext(StoreContext);
+  const { cartItems, token, setToken } = useContext(StoreContext);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -110,7 +112,14 @@ const {cartItems} = useContext(StoreContext);
     setIsOpenDrawer(false);
     console.log("clicked");
   }
-  
+
+  const logout= () =>{
+    localStorage.removeItem("token");
+    setToken("");
+    handleMenuClose();
+    navigate("/");
+
+  }
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -258,9 +267,11 @@ const {cartItems} = useContext(StoreContext);
               onClick={() => navigate("/cart")}
             >
               <Badge
-                badgeContent={Object.values(cartItems).reduce((a, b) => a + b, 0)}
+                badgeContent={Object.values(cartItems).reduce(
+                  (a, b) => a + b,
+                  0,
+                )}
                 color="error"
-                
               >
                 <ShoppingCartIcon />
               </Badge>
@@ -274,36 +285,99 @@ const {cartItems} = useContext(StoreContext);
                 <NotificationsIcon />
               </Badge>
             </IconButton>
-            {/* <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="#999999"
-            >
-              <AccountCircle />
-            </IconButton> */}
-            <Button
-              variant="outlined"
-              sx={{
-                p: "0.1rem 2rem",
-                color: "#999999",
-                borderColor: "#999999",
-                "&:hover": {
+            {/*  */}
+            {!token ? (
+              <Button
+                variant="outlined"
+                sx={{
+                  p: "0.1rem 2rem",
+                  color: "#999999",
                   borderColor: "#999999",
-                },
-                borderRadius: "30px",
-                mx: 2,
-              }}
-              onClick={() => setShowSignin(true)}
-            >
-              Sign In
-            </Button>
+                  "&:hover": {
+                    borderColor: "#999999",
+                  },
+                  borderRadius: "30px",
+                  mx: 2,
+                }}
+                onClick={() => setShowSignin(true)}
+              >
+                Sign In
+              </Button>
+            ) : (
+              <IconButton
+                size="large"
+                edge="end"
+                aria-label="account of current user"
+                // aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                color="#999999"
+              >
+                <AccountCircle
+                  sx={{
+                    width: "40px",
+                    height: "40px",
+                  }}
+                />
+              </IconButton>
+            )}
           </Box>
         </Toolbar>
       </AppBar>
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={isMenuOpen}
+        onClose={handleMenuClose}
+        slotProps={{
+          list: {
+            "aria-labelledby": "basic-button",
+          },
+        }}
+        sx={{
+          //  mt: "45px",
+          "& .MuiPaper-root": {
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-end",
+            minHeight: "150px",
+            backgroundColor: "#ffffff",
+            color: "#000000",
+            borderRadius: "8px",
+            boxShadow:
+              "0px 2px 4px rgba(0, 0, 0, 0.1), 0px 4px 8px rgba(0, 0, 0, 0.1)",
+          },
+        }}
+      >
+        {/* <MenuItem onClick={handleMenuClose}>Profile</MenuItem> */}
+        <MenuItem
+          sx={{
+            "&:hover": {
+              color: "#ff7a00",
+            },
+          }}
+          onClick={handleMenuClose}
+        >
+          <DeliveryDiningIcon
+            sx={{
+              marginRight: "10px",
+            }}
+          />
+          My Orders
+        </MenuItem>
+        <MenuItem
+          sx={{
+            mt: "15px",
+            "&:hover": {
+              color: "#ff7a00",
+            },
+          }}
+          onClick={logout}
+        >
+          <LogoutIcon sx={{ marginRight: "10px" }} />
+          Logout
+        </MenuItem>
+      </Menu>
     </Box>
   );
 }

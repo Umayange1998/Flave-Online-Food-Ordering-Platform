@@ -17,6 +17,9 @@ connectDB();
 
 //Routers
 import foodRouter from "./routes/Food.js";
+import userRouter from "./routes/User.js";
+
+app.use("/user",userRouter);
 app.use("/food",foodRouter);
 
 

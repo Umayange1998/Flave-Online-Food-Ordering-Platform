@@ -1,11 +1,13 @@
 import { createContext, useEffect, useState } from "react";
 import {food_list} from "../assets/assets";
+import { set } from "mongoose";
 
 export const StoreContext = createContext(null);
 
 const StoreContextProvider = (props) => {
 
     const [cartItems, setCartItems] = useState([]);
+    const [token, setToken] = useState("");
 
     const addToCart = (itemId) =>{
         if(!cartItems[itemId]){
@@ -31,13 +33,20 @@ const StoreContextProvider = (props) => {
     }
     return totalAmount;
     }
+    useEffect(()=>{
+      if (localStorage.getItem("token")){
+        setToken(localStorage.getItem("token"));
+      }  
+    })
     const contextValue = {
         food_list,
         cartItems,
         setCartItems,
         addToCart,
         removeFromCart,
-        getTotalCartAmount
+        getTotalCartAmount,
+        token,
+        setToken
     };
     return (
         <StoreContext.Provider value={contextValue}>
