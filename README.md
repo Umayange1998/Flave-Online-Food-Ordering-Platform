@@ -1,5 +1,6 @@
 **🍔 Flave – Online Food Ordering Platform
 **
+
 Flave is a full-stack MERN food ordering application with User and Admin dashboards.
 Customers can browse food, add to cart, and place orders, while admins can manage food items and orders.
 
