@@ -5,6 +5,10 @@ import FoodItem from "../FoodItem/FoodItem";
 
 function FoodDisplay({ category }) {
   const { food_list } = useContext(StoreContext);
+   const filteredFood =
+    category === "All"
+      ? food_list
+      : food_list.filter((item) => item.category === category);
   return (
     <Grid
       container
@@ -31,7 +35,7 @@ function FoodDisplay({ category }) {
         //   justifyContent="space-between"
             sx={{ mt: "10px", mx: "5%" }}
         >
-          {food_list?.map((item) => (
+          {filteredFood.map((item) => (
               <Grid item xs={6} sm={3} md={3} lg={2.4} key={item._id}>
                 <FoodItem
                   id={item._id}

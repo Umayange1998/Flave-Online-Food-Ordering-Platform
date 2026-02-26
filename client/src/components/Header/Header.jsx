@@ -161,6 +161,11 @@ function Header() {
               color: "#000",
               "&:hover": { backgroundColor: "#999999" },
             }}
+              onClick={() => {
+                document
+                        .getElementById("menu")
+                        ?.scrollIntoView({ behavior: "smooth" });
+              }}
           >
             View Menu
           </Button>
