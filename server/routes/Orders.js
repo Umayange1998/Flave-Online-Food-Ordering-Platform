@@ -91,4 +91,15 @@ router.get("/allOrders", async (req, res) => {
     }
 });
 
+// update order status by admin//
+router.post("/updateStatus", async (req, res) => {
+    try {
+        await orderModel.findByIdAndUpdate(req.body.orderId, {status: req.body.status});
+        res.json({success: true, message: "Order status updated"});
+    }catch (error) {
+        console.log(error);
+        res.status(500).json({success: false, message: error.message});
+    }
+})
+
 export default router;

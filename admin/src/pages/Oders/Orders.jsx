@@ -16,6 +16,19 @@ function Orders() {
       toast.error("Error fetching orders");
     }
   };
+
+  const handleStatusChange = async (event, orderId) => {
+    const response = await axios.post(BASE_URL + "/order/updateStatus", {
+      orderId,
+      status: event.target.value,
+    });
+    if (response.data.success) {
+      toast.success("Order status updated");
+      fetchOrders(); 
+    } else {
+      toast.error("Error updating order status");
+    }
+  };
   useEffect(() => {
     fetchOrders();
   }, []);
@@ -89,17 +102,15 @@ function Orders() {
               </Typography>
             </Box>
             <Box
-             sx={{
+              sx={{
                 width: "250px",
                 textAlign: "left",
-              }}>
-            <Typography
-              variant="body2"
-             
+              }}
             >
-              {order.address.firstName + " " + order.address.lastName}
-            </Typography>
-            
+              <Typography variant="body2">
+                {order.address.firstName + " " + order.address.lastName}
+              </Typography>
+
               <Typography variant="body2"> {order.address.street}</Typography>
               <Typography variant="body2">
                 {" "}
@@ -115,28 +126,36 @@ function Orders() {
             </Box>
 
             <Typography
-             sx={{
+              sx={{
                 width: "80px",
                 textAlign: "left",
-              }}>Item : {order.items.length}</Typography>
-            <Typography 
-             sx={{
+              }}
+            >
+              Item : {order.items.length}
+            </Typography>
+            <Typography
+              sx={{
                 width: "80px",
                 textAlign: "left",
-              }}> ${order.amount}</Typography>
-            <Select sx={{
-              padding:0,
-              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                borderColor: "#ff7a00",
-              },
-              my:"auto"
-            }}
-            size="small"
+              }}
+            >
+              {" "}
+              ${order.amount}
+            </Typography>
+            <Select
+              sx={{
+                padding: 0,
+                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#ff7a00",
+                },
+                my: "auto",
+              }}
+              size="small"
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={order.status}
               // label="Age"
-              // onChange={handleChange}
+              onChange={(event) => handleStatusChange(event, order._id)}
+              value={order.status}
             >
               <MenuItem value="preparing">preparing</MenuItem>
               <MenuItem value="delivering">delivering</MenuItem>

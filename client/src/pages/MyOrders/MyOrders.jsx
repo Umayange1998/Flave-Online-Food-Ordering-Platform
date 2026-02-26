@@ -84,6 +84,7 @@ function MyOrders() {
                     backgroundColor: "#803201",
                   },
                 }}
+                onClick={handleGetOrders}
               >
                 Track Order
               </Button>
