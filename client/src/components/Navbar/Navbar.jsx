@@ -120,6 +120,10 @@ function Navbar({ setShowSignin }) {
     navigate("/");
 
   }
+  const handleNavigateMyOrders = () => {
+    navigate("/my-orders");
+    handleMenuClose();
+  }
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -356,7 +360,7 @@ function Navbar({ setShowSignin }) {
               color: "#ff7a00",
             },
           }}
-          onClick={handleMenuClose}
+          onClick={handleNavigateMyOrders}
         >
           <DeliveryDiningIcon
             sx={{

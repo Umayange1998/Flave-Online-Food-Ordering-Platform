@@ -32,7 +32,7 @@ function Add() {
 
   const [errors, setErrors] = useState({});
 
-  const FoodCategory = ["Pizza", "Burger", "Dessert", "Drinks"];
+  const FoodCategory = ["Mains", "Salads", "Soups", "Seafood","Chicken","Vegetables","Fried_Rice","Fried_Noodles","Kottu","Pasta_and_Spaghetti","Soft_Drinks"];
 
   const handleAddFood = async () => {
     console.log("BASE_URL:", BASE_URL);

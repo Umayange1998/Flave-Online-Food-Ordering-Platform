@@ -17,15 +17,29 @@ import {
 import Paper from "@mui/material/Paper";
 import AddCircleOutlineTwoToneIcon from "@mui/icons-material/AddCircleOutlineTwoTone";
 import RemoveCircleOutlineTwoToneIcon from "@mui/icons-material/RemoveCircleOutlineTwoTone";
+import { useEffect } from "react";
 
 function Cart() {
-  const { cartItems, food_list, removeFromCart, addToCart, getTotalCartAmount } =
+  const { cartItems, food_list, removeFromCart, addToCart, getTotalCartAmount, BASE_URL } =
     useContext(StoreContext);
     const navigate = useNavigate();
 
     const deliveryFee = 2.99;
     const subtotal = getTotalCartAmount();
 const total = subtotal + deliveryFee;
+
+const handleNavigate = () => {
+  if (subtotal === 0) {
+    navigate("/cart");
+  }else {
+  navigate("/placeorder");}
+}
+
+useEffect(() => {
+  if (subtotal === 0) {
+    navigate("/cart");
+  }
+},[subtotal, navigate])
 
   return (
     <Grid
@@ -88,7 +102,7 @@ const total = subtotal + deliveryFee;
                             // height: { xs: '30px', sm: '60px' },
                             objectFit: "cover",
                           }}
-                          src={item.image}
+                          src={`${BASE_URL}/uploads/${item.image}`}
                           alt={item.name}
                         />
                       </TableCell>
@@ -186,7 +200,7 @@ const total = subtotal + deliveryFee;
         <Box display={"flex"} justifyContent={{ xs: "center", sm: "flex-start" }} sx={{ p: 2 }}>
           <Button variant="contained"
            sx={{ backgroundColor: "#ff751f" }}
-           onClick={()=>navigate('/placeorder')}>
+           onClick={handleNavigate}>
             Proceed to Checkout
           </Button>
         </Box>

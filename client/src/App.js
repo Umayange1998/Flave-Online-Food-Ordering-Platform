@@ -9,6 +9,8 @@ import { Toolbar } from '@mui/material';
 import { useState } from 'react';
 import SigninForm from './SigninForm/SigninForm.jsx';
 import ScrollToTop from "./ScrollToTop.jsx";
+import Veryfy from './pages/Verify/Veryfy.jsx';
+import MyOrders from './pages/MyOrders/MyOrders.jsx';
 
 
 function App() {
@@ -25,6 +27,8 @@ function App() {
       <Route path='/' element={<Home/>}/>
       <Route path='/cart' element={<Cart/>}/>
       <Route path='/placeorder' element={<PlaceOrder/>}/>
+      <Route path='/verify-payment' element={<Veryfy/>}/>
+      <Route path='/my-orders' element={<MyOrders/>}/>
      </Routes>
     </div>
     <Footer/>

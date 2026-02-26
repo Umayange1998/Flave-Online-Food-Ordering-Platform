@@ -15,7 +15,9 @@ import { useContext, useState } from "react";
 import { StoreContext } from "../../context/StoreContext";
 function FoodItem({ id, name, description, price, image }) {
 
-    const {cartItems, addToCart, removeFromCart} = useContext(StoreContext);
+    const {cartItems, addToCart, removeFromCart,BASE_URL} = useContext(StoreContext);
+    console.log("BASE_URL:", BASE_URL);
+console.log("image:", image);
 
   return (
     <Card
@@ -34,7 +36,7 @@ function FoodItem({ id, name, description, price, image }) {
       <Box sx={{ position: "relative", width: "100%" }}>
         <CardMedia
           component="img"
-          image={image}
+          image={`${BASE_URL}/uploads/${image}`}
           alt={name}
           sx={{
             height: { xs: 80, sm: 100, md: 140 },
@@ -138,6 +140,7 @@ function FoodItem({ id, name, description, price, image }) {
         </Box>
       </CardContent>
     </Card>
+    
   );
 }
 

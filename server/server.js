@@ -18,9 +18,14 @@ connectDB();
 //Routers
 import foodRouter from "./routes/Food.js";
 import userRouter from "./routes/User.js";
+import cartRouter from "./routes/Cart.js";
+import orderRouter from "./routes/Orders.js";
 
 app.use("/user",userRouter);
 app.use("/food",foodRouter);
+app.use("/cart", cartRouter);
+app.use("/order", orderRouter);
+
 
 
 app.listen(port,()=>{
